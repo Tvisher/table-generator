@@ -28,13 +28,13 @@
         <input class="corrected-field" type="number" v-model="employee.bid" />
       </div>
       <div class="btns-wrapper">
-        <button class="list-item__edit" @click="doModify(employee.id)"></button>
         <button
           class="list-item__remove"
-          @click="removeEmployeeItemFnc(employee.id)"
+          @click="$emit('removeEmployeeItem', employee.id)"
         >
           X
         </button>
+        <button class="list-item__edit" @click="doModify(employee.id)"></button>
       </div>
     </li>
   </ul>
@@ -56,10 +56,6 @@ export default {
       });
       currentEmployee.employeeModify = !currentEmployee.employeeModify;
     },
-
-    removeEmployeeItemFnc(id) {
-      this.$emit("removeEmployeeItem", id);
-    },
   },
 };
 </script>
@@ -68,8 +64,7 @@ export default {
 .corrected-field {
   display: none;
   padding: 5px;
-  border-radius: 3px;
-  // margin: 5px;
+  border-radius: 5px;
   background: transparent;
   color: #fff;
   border: 1px solid #fff;
@@ -118,11 +113,11 @@ export default {
   }
 }
 .btns-wrapper {
-  width: 10%;
-  padding-left: 20px;
+  width: 70px;
   display: flex;
   gap: 10px;
-  flex-direction: column;
+  // flex-direction: column;
+  flex-shrink: 0;
 }
 .list-item__nameplate {
   font-size: 14px;

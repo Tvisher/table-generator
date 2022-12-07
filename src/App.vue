@@ -2,11 +2,13 @@
   <div class="container">
     <div class="app-wrapper">
       <div class="app-left">
-        <EmployeesList
-          :employeesDataProp="employeesData"
+        <project-data />
+        <employees-list
+          :employeesDataProp="appData.employeesData"
           @removeEmployeeItem="removeEmployeeItem"
         />
-        <AddEmployee @addEmployeeItem="addEmployeeItem" />
+        <add-employee @addEmployeeItem="addEmployeeItem" />
+        <add-stage />
       </div>
     </div>
   </div>
@@ -14,51 +16,55 @@
 
 <script>
 import EmployeesList from "./components/EmployeesList.vue";
+import ProjectData from "./components/ProjectData.vue";
 import AddEmployee from "./components/AddEmployee.vue";
+import AddStage from "./components/AddStage.vue";
 export default {
   name: "App",
   components: {
     EmployeesList,
+    ProjectData,
     AddEmployee,
+    AddStage,
   },
   data() {
     return {
-      employeesData: [
-        {
-          id: 1,
-          name: "Натальчук Денис",
-          position: "Управляющий студии",
-          bid: 30952,
-          employeeModify: false,
-        },
-        {
-          id: 2,
-          name: "Медонин Евгений",
-          position: "Программист",
-          bid: 23524,
-          employeeModify: false,
-        },
-        {
-          id: 3,
-          name: "Кочнев Михаил",
-          position: "Дизайнер",
-          bid: 14857,
-          employeeModify: false,
-        },
-      ],
+      appData: {
+        employeesData: [
+          {
+            id: 1,
+            name: "Натальчук Денис",
+            position: "Управляющий студии",
+            bid: 30952,
+            employeeModify: false,
+          },
+          {
+            id: 2,
+            name: "Медонин Евгений",
+            position: "Программист",
+            bid: 23524,
+            employeeModify: false,
+          },
+          {
+            id: 3,
+            name: "Кочнев Михаил",
+            position: "Дизайнер",
+            bid: 14857,
+            employeeModify: false,
+          },
+        ],
+      },
     };
   },
 
   methods: {
     addEmployeeItem(obj) {
-      this.employeesData.push(obj);
+      this.appData.employeesData.push(obj);
     },
     removeEmployeeItem(id) {
-      console.log(id);
-      this.employeesData = this.employeesData.filter(
+      this.appData.employeesData = this.appData.employeesData.filter(
         (employee) => employee.id != id
       );
-      console.log(this.employeesData);
     },
   },
 };

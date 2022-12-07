@@ -1,7 +1,7 @@
 <template>
   <div class="add-employee">
     <label class="add-employee__label">
-      <span class="nameplate">ФИО</span>
+      <span class="nameplate">ФИО сотрудника</span>
       <input class="add-employee__field" type="text" v-model="employeeName" />
     </label>
 
@@ -15,7 +15,7 @@
     </label>
 
     <label class="add-employee__label">
-      <span class="nameplate">Дневная ставка</span>
+      <span class="nameplate">Дневная ставка, ТГ</span>
       <input class="add-employee__field" type="number" v-model="employeeBid" />
     </label>
 
@@ -88,11 +88,12 @@ export default {
   }
 }
 .nameplate {
-  font-size: 12px;
+  font-size: 14px;
+  margin-bottom: 3px;
 }
 .add-employee__field {
   font-size: 16px;
-  padding: 10px;
+  padding: 12px;
   border-radius: 5px;
   background: transparent;
   color: #fff;
