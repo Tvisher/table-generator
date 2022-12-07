@@ -48,7 +48,7 @@ export default {
   border-radius: 5px;
   background: transparent;
   color: #fff;
-  border: 1px solid #fff;
+  border: 1px solid rgb(255, 255, 255, 0.3);
 }
 .add-stage__btn {
   margin-left: auto;
