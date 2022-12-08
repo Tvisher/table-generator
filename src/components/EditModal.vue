@@ -1,9 +1,18 @@
 <template>
   <div class="modal">
-    <div class="modal__content">
+    <div class="modal__content" v-if="isShow">
       <div class="modal__title">
         {{ selectedStage.name }}
       </div>
+      <ul class="phases-list">
+        <li
+          class="phases-list__item"
+          v-for="phaseItem in selectedStage.phases"
+          :key="phaseItem.id"
+        >
+          <span>{{ phaseItem.name }}</span>
+        </li>
+      </ul>
       <div class="add-phases">
         <label class="phases__label">
           <span class="label__nameplate">Название этапа:</span>
@@ -13,7 +22,7 @@
           <span class="label__nameplate"
             >Выберите сотрудников для этого этапа:</span
           >
-          <ul v-if="isShow">
+          <ul>
             <li
               class="emloyee"
               v-for="employee in data.employeesData"
@@ -81,6 +90,7 @@ export default {
   },
 
   methods: {
+    // Выбор колличества дней работы конкретного сотрудника
     setEmployeeDays(event, id) {
       this.emloyeesList = this.emloyeesList.filter((item) => item.id !== id);
       const currentValue = event.target.value;
@@ -93,28 +103,32 @@ export default {
         this.calcPhasePrice();
       }, 100);
     },
+    // Расчёт стоимости работ по этапу
     calcPhasePrice() {
       const phasePrice = this.emloyeesList.reduce((acc, item) => {
         return acc + item.employeePrice;
       }, 0);
       this.phasePrice = phasePrice;
     },
-
+    // Расчёт стоимости работы конкретного сотрудника по конкретному этапу
     calcEmployeePrice(id) {
       const emloyee = this.emloyeesList.find((item) => item.id === id);
       const employeePrice = emloyee?.bid * emloyee?.workDays || 0;
       if (emloyee) emloyee.employeePrice = employeePrice;
       return employeePrice.toLocaleString("RU-ru");
     },
-
+    // Добавляем этап в стадию
     addPhase() {
+      if (this.emloyeesList.length < 1 || !this.phasesName.trim()) {
+        return;
+      }
       this.$store.commit("addPhase", {
         // Id стадии
-        id: 0,
+        id: this.selectedStage.id,
         data: {
           id: `phaseId-${Math.random().toString(36).substring(2, 9)}`,
+          name: this.phasesName,
           phasePrice: this.phasePrice,
-          phasesName: this.phasesName,
           emloyeesList: this.emloyeesList,
         },
       });

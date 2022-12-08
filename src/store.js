@@ -60,7 +60,8 @@ const store = createStore({
         },
 
         addPhase(state, dataObj) {
-            console.log(dataObj);
+            const currentStage = state.stages.find(stage => stage.id === dataObj.id);
+            currentStage.phases.push(dataObj.data);
         }
     }
 });

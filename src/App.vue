@@ -12,12 +12,14 @@
           :stagesData="appData.stages"
           @showStageSetting="showStageSetting"
         />
-        <edit-modal
-          :appData="appData"
-          v-if="showModal"
-          :selectedStage="selectedStage"
-          @click.self="showModal = false"
-        />
+        <Transition>
+          <edit-modal
+            :appData="appData"
+            v-if="showModal"
+            :selectedStage="selectedStage"
+            @click.self="showModal = false"
+          />
+        </Transition>
       </div>
     </div>
   </div>
@@ -59,6 +61,15 @@ export default {
 
 <style lang="scss">
 @import "./assets/scss/app";
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 .app-wrapper {
   padding: 30px;
   gap: 30px;
