@@ -3,12 +3,21 @@
     <div class="app-wrapper">
       <div class="app-left">
         <project-data />
-        <employees-list
-          :employeesDataProp="appData.employeesData"
-          @removeEmployeeItem="removeEmployeeItem"
-        />
-        <add-employee @addEmployeeItem="addEmployeeItem" />
+        <employees-list :employeesData="appData.employeesData" />
+        <add-employee />
         <add-stage />
+      </div>
+      <div class="app-right">
+        <stages-list
+          :stagesData="appData.stages"
+          @showStageSetting="showStageSetting"
+        />
+        <edit-modal
+          :appData="appData"
+          v-if="showModal"
+          :selectedStage="selectedStage"
+          @click.self="showModal = false"
+        />
       </div>
     </div>
   </div>
@@ -19,6 +28,8 @@ import EmployeesList from "./components/EmployeesList.vue";
 import ProjectData from "./components/ProjectData.vue";
 import AddEmployee from "./components/AddEmployee.vue";
 import AddStage from "./components/AddStage.vue";
+import StagesList from "./components/StagesList.vue";
+import EditModal from "./components/EditModal.vue";
 export default {
   name: "App",
   components: {
@@ -26,45 +37,21 @@ export default {
     ProjectData,
     AddEmployee,
     AddStage,
+    StagesList,
+    EditModal,
   },
   data() {
     return {
-      appData: {
-        employeesData: [
-          {
-            id: 1,
-            name: "Натальчук Денис",
-            position: "Управляющий студии",
-            bid: 30952,
-            // employeeModify: false,
-          },
-          {
-            id: 2,
-            name: "Медонин Евгений",
-            position: "Программист",
-            bid: 23524,
-            // employeeModify: false,
-          },
-          {
-            id: 3,
-            name: "Кочнев Михаил",
-            position: "Дизайнер",
-            bid: 14857,
-            // employeeModify: false,
-          },
-        ],
-      },
+      appData: this.$store.state,
+      showModal: false,
+      selectedStage: "",
     };
   },
 
   methods: {
-    addEmployeeItem(obj) {
-      this.appData.employeesData.push(obj);
-    },
-    removeEmployeeItem(id) {
-      this.appData.employeesData = this.appData.employeesData.filter(
-        (employee) => employee.id != id
-      );
+    showStageSetting(id) {
+      this.selectedStage = this.appData.stages.find((item) => item.id === id);
+      this.showModal = true;
     },
   },
 };
@@ -75,5 +62,8 @@ export default {
 .app-wrapper {
   padding: 30px;
   gap: 30px;
+}
+.app-right {
+  width: 50%;
 }
 </style>

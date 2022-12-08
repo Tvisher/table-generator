@@ -3,7 +3,7 @@
     <li
       class="list-item"
       :class="{ modify: employee.employeeModify }"
-      v-for="employee in this.employeesDataProp"
+      v-for="employee in this.employeesData"
       :key="employee.id"
     >
       <div class="list-item__wrapper">
@@ -36,11 +36,14 @@
       <div class="btns-wrapper">
         <button
           class="list-item__remove"
-          @click="$emit('removeEmployeeItem', employee.id)"
+          @click="this.$store.commit('remooveEmployee', employee.id)"
         >
           X
         </button>
-        <button class="list-item__edit" @click="doModify(employee.id)"></button>
+        <button
+          class="list-item__edit"
+          @click="this.$store.commit('modifyEmployee', employee.id)"
+        ></button>
       </div>
     </li>
   </ul>
@@ -50,19 +53,12 @@
 export default {
   name: "EmployeesList",
   props: {
-    employeesDataProp: Array,
+    employeesData: Array,
   },
   data() {
     return {};
   },
-  methods: {
-    doModify(id) {
-      const currentEmployee = this.employeesDataProp.find((item) => {
-        return item.id === id;
-      });
-      currentEmployee.employeeModify = !currentEmployee.employeeModify;
-    },
-  },
+  methods: {},
 };
 </script>
 

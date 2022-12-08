@@ -4,7 +4,7 @@
       <span class="nameplate">Название стадии проекта</span>
       <input class="add-stage__field" type="text" v-model="stageName" />
     </label>
-    <button @click="addstageFnc" class="add-stage__btn btn">
+    <button @click="addStage" class="add-stage__btn btn">
       Добавить стадию проекта
     </button>
   </div>
@@ -20,7 +20,20 @@ export default {
       stageId: "",
     };
   },
-  methods: {},
+  methods: {
+    addStage() {
+      if (!this.stageName.trim()) {
+        return;
+      }
+
+      this.$store.commit("addStage", {
+        name: this.stageName.trim(),
+        id: `stageId-${Math.random().toString(36).substring(2, 9)}`,
+      });
+      this.stageName = "";
+      this.stageId = "";
+    },
+  },
 };
 </script>
 

@@ -28,7 +28,6 @@
 <script>
 export default {
   name: "AddEmployee",
-
   data() {
     return {
       employeeName: "",
@@ -47,7 +46,7 @@ export default {
         return;
       }
 
-      this.$emit("addEmployeeItem", {
+      this.$store.commit("addEmployee", {
         name: this.employeeName,
         position: this.employeePosition,
         bid: this.employeeBid,
