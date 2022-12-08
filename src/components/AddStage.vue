@@ -29,6 +29,7 @@ export default {
       this.$store.commit("addStage", {
         name: this.stageName.trim(),
         id: `stageId-${Math.random().toString(36).substring(2, 9)}`,
+        phases: [],
       });
       this.stageName = "";
       this.stageId = "";

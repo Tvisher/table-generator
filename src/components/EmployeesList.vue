@@ -17,12 +17,12 @@
       </div>
       <div class="list-item__wrapper">
         <div class="list-item__nameplate">Должность</div>
-        <input
+        <textarea
           class="corrected-field"
           type="text"
           :disabled="!employee.employeeModify"
           v-model="employee.position"
-        />
+        ></textarea>
       </div>
       <div class="list-item__wrapper">
         <div class="list-item__nameplate">Дневная ставка, ТГ</div>
@@ -69,6 +69,7 @@ export default {
   }
 }
 .corrected-field {
+  resize: none;
   margin-left: -5px;
   padding: 5px;
   border-radius: 5px;
@@ -115,10 +116,10 @@ export default {
   display: flex;
   flex-direction: column;
   &:nth-child(1) {
-    width: 40%;
+    width: 30%;
   }
   &:nth-child(2) {
-    width: 30%;
+    width: 40%;
   }
   &:nth-child(3) {
     width: 20%;

@@ -126,8 +126,8 @@ export default {
         // Id стадии
         id: this.selectedStage.id,
         data: {
-          id: `phaseId-${Math.random().toString(36).substring(2, 9)}`,
           name: this.phasesName,
+          id: `phaseId-${Math.random().toString(36).substring(2, 9)}`,
           phasePrice: this.phasePrice,
           emloyeesList: this.emloyeesList,
         },
@@ -232,6 +232,7 @@ export default {
   margin-bottom: 20px;
 }
 .modal {
+  overflow: auto;
   padding: 50px;
   position: fixed;
   z-index: 99;

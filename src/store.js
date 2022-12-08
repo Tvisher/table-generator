@@ -22,6 +22,24 @@ const store = createStore({
                     position: "Дизайнер",
                     bid: 14857,
                 },
+                {
+                    id: 3,
+                    name: "Арбузов Иван",
+                    position: "Специалист по непонятным вопросам",
+                    bid: 13619,
+                },
+                {
+                    id: 4,
+                    name: "Монахов Владимир",
+                    position: "Копирайтер, контент-менеджер",
+                    bid: 13000,
+                },
+                {
+                    id: 5,
+                    name: "Тихонов Иван",
+                    position: "Верстальщик, программист",
+                    bid: 14857,
+                },
             ],
             stages: [
                 {
@@ -60,7 +78,7 @@ const store = createStore({
         },
 
         addPhase(state, dataObj) {
-            const currentStage = state.stages.find(stage => stage.id === dataObj.id);
+            const currentStage = state.stages.find(stage => stage.id.toString() === dataObj.id.toString());
             currentStage.phases.push(dataObj.data);
         }
     }
