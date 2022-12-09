@@ -4,15 +4,7 @@
       <div class="modal__title">
         {{ selectedStage.name }}
       </div>
-      <ul class="phases-list">
-        <li
-          class="phases-list__item"
-          v-for="phaseItem in selectedStage.phases"
-          :key="phaseItem.id"
-        >
-          <span>{{ phaseItem.name }}</span>
-        </li>
-      </ul>
+      <phases-list :selectedStageId="selectedStage.id" />
       <div class="add-phases">
         <label class="phases__label">
           <span class="label__nameplate">Название этапа:</span>
@@ -25,7 +17,7 @@
           <ul>
             <li
               class="emloyee"
-              v-for="employee in data.employeesData"
+              v-for="employee in this.$store.state.employeesData"
               :key="employee.id"
             >
               <input
@@ -33,6 +25,7 @@
                 type="checkbox"
                 name="emloyee"
                 v-bind:value="employee.id"
+                @change="toggleEmloyeesList(employee.id)"
               />
               <div class="emloyee__wrapper">
                 <label class="emloyee__label">
@@ -72,10 +65,13 @@
 </template>
 
 <script>
+import PhasesList from "./PhasesList";
 export default {
   name: "EditModal",
+  components: {
+    PhasesList,
+  },
   props: {
-    appData: Object,
     selectedStage: Object,
   },
   data() {
@@ -86,19 +82,28 @@ export default {
       phasesName: "",
       phasePrice: 0,
       emloyeesList: [],
+      emloyee: {},
     };
   },
 
   methods: {
+    toggleEmloyeesList(id) {
+      this.emloyeesList = this.emloyeesList.filter((item) => item.id !== id);
+      setTimeout(() => {
+        this.calcPhasePrice();
+      }, 100);
+    },
     // Выбор колличества дней работы конкретного сотрудника
     setEmployeeDays(event, id) {
       this.emloyeesList = this.emloyeesList.filter((item) => item.id !== id);
       const currentValue = event.target.value;
-      const emloyee = this.data.employeesData.find(
+      const emloyee = this.$store.state.employeesData.find(
         (emloyee) => emloyee.id === id
       );
-      emloyee.workDays = currentValue;
-      this.emloyeesList.push(emloyee);
+      this.emloyee = Object.assign(this.emloyee, emloyee);
+      this.emloyee.workDays = currentValue;
+      this.emloyeesList.push(this.emloyee);
+      this.emloyee = {};
       setTimeout(() => {
         this.calcPhasePrice();
       }, 100);
@@ -145,108 +150,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.add-phases {
-  display: flex;
-  flex-direction: column;
-}
-.add-phases__btn {
-  margin-top: 10px;
-  margin-left: auto;
-}
-.phases__label {
-  margin-bottom: 20px;
-}
-.emloyee__nameplate {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.8);
-}
-.emloyee-name {
-  padding-left: 50px;
-}
-.emloyee__days {
-  width: 60px;
-  height: 30px;
-  background-color: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  text-align: center;
-}
-.emloyee__label {
-  width: 28%;
-}
-.emloyee__data {
-  width: 18%;
-  font-size: 14px;
-  text-align: center;
-}
-.emloyee__label {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.emloyee__select {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
-  width: 20px;
-  height: 20px;
-  &:checked + .emloyee__wrapper {
-    opacity: 1;
-    pointer-events: all;
-  }
-}
-.emloyee {
-  position: relative;
-  padding: 10px 0;
-}
-.emloyee__wrapper {
-  transition: opacity 0.2s ease-in-out;
-  opacity: 0.4;
-  pointer-events: none;
-  display: flex;
-  padding: 10px;
-  gap: 10px;
-  justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-}
-.label__field {
-  font-size: 16px;
-  padding: 12px;
-  border-radius: 5px;
-  background: transparent;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  width: 100%;
-}
-.label__nameplate {
-  font-size: 16px;
-  color: #fff;
-  margin-bottom: 5px;
-}
-.modal__title {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-.modal {
-  overflow: auto;
-  padding: 50px;
-  position: fixed;
-  z-index: 99;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.modal__content {
-  max-width: 1240px;
-  background-color: #17171a;
-  padding: 30px;
-  border-radius: 15px;
-  margin: auto;
-}
-</style>
+<style lang="scss" scoped></style>

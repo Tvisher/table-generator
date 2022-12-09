@@ -511,3 +511,107 @@ input[type="number"]:focus {
 .app-left {
   width: 50%;
 }
+
+.add-phases {
+  display: flex;
+  flex-direction: column;
+}
+.add-phases__btn {
+  margin-top: 10px;
+  margin-left: auto;
+}
+.phases__label {
+  margin-bottom: 20px;
+}
+.emloyee__nameplate {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.emloyee-name {
+  padding-left: 50px;
+}
+.emloyee__days {
+  width: 60px;
+  height: 30px;
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  text-align: center;
+}
+.emloyee__label {
+  width: 28%;
+}
+.emloyee__data {
+  width: 18%;
+  font-size: 14px;
+  text-align: center;
+}
+.emloyee__label {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.emloyee__select {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  &:checked + .emloyee__wrapper {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+.emloyee {
+  position: relative;
+  padding: 10px 0;
+}
+.emloyee__wrapper {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.4;
+  pointer-events: none;
+  display: flex;
+  padding: 10px;
+  gap: 10px;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+.label__field {
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 5px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+}
+.label__nameplate {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 5px;
+}
+.modal__title {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.modal {
+  overflow: auto;
+  padding: 50px;
+  position: fixed;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal__content {
+  max-width: 1240px;
+  background-color: #17171a;
+  padding: 30px;
+  border-radius: 15px;
+  margin: auto;
+}

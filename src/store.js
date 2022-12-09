@@ -43,13 +43,13 @@ const store = createStore({
             ],
             stages: [
                 {
-                    id: 0,
+                    id: '0',
                     name: 'Стадия 1. Разработка технического задания на разработку корпоративного сайта',
                     phases: []
                 },
 
                 {
-                    id: 1,
+                    id: '1',
                     name: 'Стадия 2. Сбор требований, анализ и систематизация требований Заказчика к сайту',
                     phases: []
                 }
@@ -58,7 +58,6 @@ const store = createStore({
     },
     mutations: {
         addEmployee(state, data) {
-            console.log(state.employeesData);
             state.employeesData.push(data);
         },
         remooveEmployee(state, id) {

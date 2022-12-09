@@ -3,18 +3,17 @@
     <div class="app-wrapper">
       <div class="app-left">
         <project-data />
-        <employees-list :employeesData="appData.employeesData" />
+        <employees-list :employeesData="this.$store.state.employeesData" />
         <add-employee />
         <add-stage />
       </div>
       <div class="app-right">
         <stages-list
-          :stagesData="appData.stages"
+          :stagesData="this.$store.state.stages"
           @showStageSetting="showStageSetting"
         />
         <Transition>
           <edit-modal
-            :appData="appData"
             v-if="showModal"
             :selectedStage="selectedStage"
             @click.self="showModal = false"
@@ -44,7 +43,6 @@ export default {
   },
   data() {
     return {
-      appData: this.$store.state,
       showModal: false,
       selectedStage: "",
     };
@@ -52,7 +50,9 @@ export default {
 
   methods: {
     showStageSetting(id) {
-      this.selectedStage = this.appData.stages.find((item) => item.id === id);
+      this.selectedStage = this.$store.state.stages.find(
+        (item) => item.id === id
+      );
       this.showModal = true;
     },
   },
