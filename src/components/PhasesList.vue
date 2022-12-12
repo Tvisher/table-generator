@@ -48,8 +48,14 @@
           </li>
         </ul>
       </div>
-      {{ selectOptionsList }}
-      <Select2 v-model="selectedEmployee" :options="phaseItem.emloyeesList" />
+      <Select2
+        v-model="selectedEmployee"
+        :options="selectOptionsList[phaseItem.id]"
+        :settings="{
+          placeholder: 'Добавить сотрудника',
+          minimumResultsForSearch: -1,
+        }"
+      />
       <span class="emloyees-price">
         Стоимость этапа: &nbsp;{{ getPhasePrice(phaseItem.id) }} KZT
       </span>
@@ -106,16 +112,30 @@ export default {
       );
       return surrentStage;
     },
+
     selectOptionsList() {
       const allEmloyeesList = this.$store.state.employeesData;
       const selectedStagePhases = this.selectedStage.phases;
 
-      const sprtedArr = selectedStagePhases.map((itemArr) => {
+      let sortedArr = selectedStagePhases.map((itemArr) => {
         const idArr = itemArr.emloyeesList.map((item) => item.id);
         const s = new Set(idArr);
-        return allEmloyeesList.filter((e) => !s.has(e.id));
+        const itemEmloyeesList = allEmloyeesList.filter((e) => !s.has(e.id));
+        return itemEmloyeesList;
       });
-      return sprtedArr;
+
+      const resultObj = sortedArr.reduce((acc, item, index) => {
+        const workerList = item.map((worker) => {
+          return {
+            id: worker.id,
+            text: worker.name,
+          };
+        });
+        acc[`${selectedStagePhases[index].id}`] = workerList;
+        return acc;
+      }, {});
+
+      return resultObj;
     },
   },
 };
