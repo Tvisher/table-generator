@@ -10,6 +10,7 @@
   "dependencies": {
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
+    "vue3-select2-component": "^0.1.7",
     "vuex": "^4.0.2"
   },
   "devDependencies": {

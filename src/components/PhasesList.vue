@@ -2,8 +2,8 @@
   <ul class="phases-list">
     <li
       class="phases-list__item"
-      v-for="(phaseItem, index) in selectedStage.phases"
-      :key="index"
+      v-for="phaseItem in selectedStage.phases"
+      :key="phaseItem.id"
     >
       <span class="phases__title">{{ phaseItem.name }}</span>
       <div class="emloyees-list">
@@ -48,6 +48,8 @@
           </li>
         </ul>
       </div>
+      {{ selectOptionsList }}
+      <Select2 v-model="selectedEmployee" :options="phaseItem.emloyeesList" />
       <span class="emloyees-price">
         Стоимость этапа: &nbsp;{{ getPhasePrice(phaseItem.id) }} KZT
       </span>
@@ -57,13 +59,17 @@
 </template>
 
 <script>
+import Select2 from "vue3-select2-component";
 export default {
   name: "PhasesList",
   props: {
     selectedStageId: String,
   },
+  components: { Select2 },
   data() {
-    return {};
+    return {
+      selectedEmployee: "",
+    };
   },
   methods: {
     removeWorker(phaseItem, id) {
@@ -99,6 +105,17 @@ export default {
         (item) => item.id.toString() === this.selectedStageId.toString()
       );
       return surrentStage;
+    },
+    selectOptionsList() {
+      const allEmloyeesList = this.$store.state.employeesData;
+      const selectedStagePhases = this.selectedStage.phases;
+
+      const sprtedArr = selectedStagePhases.map((itemArr) => {
+        const idArr = itemArr.emloyeesList.map((item) => item.id);
+        const s = new Set(idArr);
+        return allEmloyeesList.filter((e) => !s.has(e.id));
+      });
+      return sprtedArr;
     },
   },
 };
