@@ -36,7 +36,9 @@
               </div>
               <div class="emloyee__data">
                 <span class="emloyee__nameplate">Итого:</span>
-                <span>{{ calcEmployeePrice(worker.id) }} KZT</span>
+                <span
+                  >{{ calcEmployeePrice(phaseItem.id, worker.id) }} KZT</span
+                >
               </div>
             </div>
             <button
@@ -49,12 +51,14 @@
         </ul>
       </div>
       <Select2
+        v-if="selectOptionsList[phaseItem.id].length"
         v-model="selectedEmployee"
         :options="selectOptionsList[phaseItem.id]"
         :settings="{
           placeholder: 'Добавить сотрудника',
           minimumResultsForSearch: -1,
         }"
+        @select="arrWorker($event, phaseItem.id)"
       />
       <span class="emloyees-price">
         Стоимость этапа: &nbsp;{{ getPhasePrice(phaseItem.id) }} KZT
@@ -78,23 +82,42 @@ export default {
     };
   },
   methods: {
+    arrWorker(event, phaseItemId) {
+      const findSelectedWorker = this.$store.state.employeesData.find(
+        (worker) => worker.id.toString() === event.id.toString()
+      );
+      const selectedWorker = Object.assign({}, findSelectedWorker);
+
+      const currentPhase = this.selectedStage.phases.find((phase) => {
+        return phase.id.toString() === phaseItemId.toString();
+      });
+
+      currentPhase.emloyeesList.push(selectedWorker);
+    },
+
     removeWorker(phaseItem, id) {
       phaseItem.emloyeesList = phaseItem.emloyeesList.filter(
         (item) => item.id !== id
       );
       console.log(this.$store.state);
     },
-    calcEmployeePrice(id) {
+
+    calcEmployeePrice(phaseItemId, workerId) {
       const res = this.selectedStage.phases
         .map((phase) => {
-          const emloyee = phase.emloyeesList.find((item) => item.id === id);
-          const employeePrice = emloyee?.bid * emloyee?.workDays || 0;
-          if (emloyee) emloyee.employeePrice = employeePrice;
-          return employeePrice;
+          if (phase.id == phaseItemId) {
+            const emloyee = phase.emloyeesList.find(
+              (item) => item.id === workerId
+            );
+            const employeePrice = emloyee?.bid * emloyee?.workDays || 0;
+            if (emloyee) emloyee.employeePrice = employeePrice;
+            return employeePrice;
+          }
         })
         .join("");
       return (+res).toLocaleString("RU-ru");
     },
+
     getPhasePrice(id) {
       const phaseItem = this.selectedStage.phases.find(
         (item) => item.id.toString() === id.toString()
