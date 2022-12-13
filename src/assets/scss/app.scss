@@ -208,9 +208,10 @@ li {
   position: relative;
   height: auto;
   padding: 22px 32px;
+  padding-left: 20px;
   border: 1px solid #303032;
-  border-radius: 32px !important;
-  margin-bottom: 20px;
+  border-radius: 10px !important;
+  // margin-bottom: 20px;
   transition: border-color 0.2s ease-in-out;
 
   &:hover {
@@ -254,17 +255,20 @@ li {
   background: #212124;
   border: 1px solid rgba(4, 99, 241, 1);
   box-shadow: 0px 0px 32px rgba(4, 99, 241, 0.7);
-  border-radius: 32px;
+  border-radius: 10px;
 }
 
 .select2-container--open .select2-dropdown {
   background-color: transparent;
   border: none;
-  padding-top: 10px;
+  padding-top: 0px;
 }
 
 .select2-results__option--selectable {
   padding: 15px 32px;
+}
+.select2-results__option {
+  padding: 15px;
 }
 
 .select2-container--default
@@ -291,7 +295,7 @@ li {
     }
   }
   border-radius: 123px;
-  margin-bottom: 20px;
+  // margin-bottom: 20px;
   background: #17171a;
   position: relative;
   .styles-text {
